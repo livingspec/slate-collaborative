@@ -24,11 +24,7 @@
     "watch": "yarn build:js -w"
   },
   "dependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
-    "@babel/runtime": "^7.6.3",
     "@slate-collaborative/bridge": "^0.7.0",
-    "@types/lodash": "^4.14.150",
-    "@types/socket.io": "^2.1.4",
     "automerge": "0.14.0",
     "lodash": "^4.17.15",
     "slate": "0.58.3",
@@ -38,11 +34,15 @@
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.6.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@babel/plugin-transform-runtime": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
-    "@babel/preset-typescript": "^7.6.0"
+    "@babel/preset-typescript": "^7.6.0",
+    "@babel/runtime": "^7.6.0",
+    "@types/lodash": "^4.14.161",
+    "@types/socket.io": "^2.1.11"
   },
   "directories": {
     "lib": "lib"

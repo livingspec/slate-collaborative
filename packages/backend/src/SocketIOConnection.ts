@@ -37,7 +37,7 @@ export default class SocketIOCollaboration {
    */
 
   constructor(options: SocketIOCollaborationOptions) {
-    this.io = io(options.entry, options.connectOpts)
+    this.io = io(options.entry as any, options.connectOpts)
 
     this.backend = new AutomergeBackend()
 
