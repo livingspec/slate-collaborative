@@ -5,7 +5,6 @@ node_modules/
 lerna-debug.log
 /.npmrc
 .vscode/
-yarn.lock
 yarn-error.log
 package-lock.json
 .idea

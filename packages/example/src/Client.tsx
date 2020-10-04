@@ -8,7 +8,10 @@ import randomColor from 'randomcolor'
 
 import styled from '@emotion/styled'
 
-import { withIOCollaboration, useCursor } from '@slate-collaborative/client'
+import {
+  withIOCollaboration,
+  useCursor
+} from '@livingspec/slate-collaborative-client'
 
 import { Instance, Title, H4, Button } from './Components'
 

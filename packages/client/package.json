@@ -1,5 +1,5 @@
 {
-  "name": "@slate-collaborative/client",
+  "name": "@livingspec/slate-collaborative-client",
   "version": "0.7.0",
   "files": [
     "lib"
@@ -9,9 +9,10 @@
   "description": "slate-collaborative bridge",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cudr/slate-collaborative.git"
+    "url": "git+https://github.com/livingspec/slate-collaborative.git"
   },
   "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
     "access": "public"
   },
   "author": "cudr",
@@ -24,7 +25,7 @@
     "watch": "yarn build:js -w"
   },
   "dependencies": {
-    "@slate-collaborative/bridge": "^0.7.0",
+    "@livingspec/slate-collaborative-bridge": "^0.7.0",
     "automerge": "0.14.0",
     "slate": "0.58.3",
     "slate-history": "0.58.3",

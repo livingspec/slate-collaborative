@@ -7,7 +7,7 @@ import {
   toSync,
   SyncDoc,
   CollabAction
-} from '@slate-collaborative/bridge'
+} from '@livingspec/slate-collaborative-bridge'
 
 export interface Connections {
   [key: string]: Automerge.Connection<SyncDoc>

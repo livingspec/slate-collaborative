@@ -5,7 +5,11 @@ import { Server } from 'http'
 
 import throttle from 'lodash/throttle'
 
-import { SyncDoc, CollabAction, toJS } from '@slate-collaborative/bridge'
+import {
+  SyncDoc,
+  CollabAction,
+  toJS
+} from '@livingspec/slate-collaborative-bridge'
 
 import { getClients } from './utils'
 

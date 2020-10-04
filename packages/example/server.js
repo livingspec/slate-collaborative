@@ -1,4 +1,6 @@
-const { SocketIOConnection } = require('@slate-collaborative/backend')
+const {
+  SocketIOConnection
+} = require('@livingspec/slate-collaborative-backend')
 const express = require('express')
 
 const defaultValue = [

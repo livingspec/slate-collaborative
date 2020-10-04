@@ -1,5 +1,5 @@
 {
-  "name": "@slate-collaborative/bridge",
+  "name": "@livingspec/slate-collaborative-bridge",
   "version": "0.7.0",
   "files": [
     "lib"
@@ -9,9 +9,10 @@
   "description": "slate-collaborative bridge",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cudr/slate-collaborative.git"
+    "url": "git+https://github.com/livingspec/slate-collaborative.git"
   },
   "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
     "access": "public"
   },
   "author": "cudr",

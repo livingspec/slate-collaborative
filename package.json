@@ -22,7 +22,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cudr/slate-collaborative.git"
+    "url": "git+https://github.com/livingspec/slate-collaborative.git"
   },
   "husky": {
     "hooks": {

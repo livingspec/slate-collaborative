@@ -7,7 +7,7 @@
     "outDir": "./lib",
     "composite": true,
     "paths": {
-      "@slate-collaborative/bridge": ["../../bridge"]
+      "@livingspec/slate-collaborative-bridge": ["../../bridge"]
     }
   },
   "references": [
