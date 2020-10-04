@@ -4,7 +4,10 @@ import { SyncValue } from '../model'
 
 export const isTree = (node: Node): boolean => Boolean(node?.children)
 
-export const getTarget = (doc: SyncValue | Element, path: Path) => {
+export const getTarget: <TDoc, TReturn = TDoc>(
+  doc: TDoc,
+  path: Path
+) => TReturn = (doc, path) => {
   const iterate = (current: any, idx: number) => {
     if (!(isTree(current) || current[idx])) {
       throw new TypeError(

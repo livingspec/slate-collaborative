@@ -5,9 +5,8 @@ import opRemove from './remove'
 import opSet from './set'
 import opCreate from './create'
 
-import { toJS } from '../utils'
-
-import { SyncDoc } from '../model'
+import { SyncDoc, SyncValue } from '../model'
+import { applyOperation, applySlateOps } from '../apply'
 
 const byAction = {
   create: opCreate,
@@ -34,9 +33,19 @@ const toSlateOp = (ops: Automerge.Diff[], doc: SyncDoc) => {
     []
   ])
 
-  const tempDoc = toJS(doc)
+  return defer.flatMap(op => {
+    const operation = op(tempTree, doc)
 
-  return defer.flatMap(op => op(tempTree, tempDoc)).filter(op => op)
+    doc = Automerge.change(doc, (d: SyncValue) => {
+      if (Array.isArray(operation)) {
+        applySlateOps(d, operation)
+      } else {
+        applyOperation(d, operation)
+      }
+    })
+
+    return operation
+  })
 }
 
 export { toSlateOp }

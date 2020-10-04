@@ -1,30 +1,29 @@
 import * as Automerge from 'automerge'
-import { Element } from 'slate'
+import { Element, RemoveTextOperation } from 'slate'
 
-import { toSlatePath } from '../utils'
+import { toJS, toSlatePath } from '../utils'
 import { getTarget } from '../path'
+import { SyncValue } from '../model'
 
-const removeTextOp = (op: Automerge.Diff) => (map: any, doc: Element) => {
+const removeTextOp: (
+  op: Automerge.Diff
+) => (map: any, doc: SyncValue) => RemoveTextOperation = op => (map, doc) => {
   const { index, path, obj } = op
 
   const slatePath = toSlatePath(path).slice(0, path?.length)
 
-  let node = getTarget(doc, slatePath) || map[obj]
+  const node =
+    getTarget<SyncValue, { text: Automerge.Text }>(doc, slatePath) || map[obj]
 
-  if (typeof index !== 'number') return
-
-  const text = node?.text[index] || '*'
-
-  if (node) {
-    node.text = node.text?.slice(0, index) + node.text?.slice(index + 1)
+  if (typeof index !== 'number') {
+    throw new Error(`Index ${index} is not a number`)
   }
 
   return {
     type: 'remove_text',
     path: slatePath,
     offset: index,
-    text,
-    marks: []
+    text: node.text.get(index)
   }
 }
 
@@ -44,7 +43,7 @@ const removeNodeOp = ({ index, obj, path }: Automerge.Diff) => (
   return {
     type: 'remove_node',
     path: slatePath.length ? slatePath.concat(index) : [index],
-    node: target
+    node: toJS(target)
   }
 }
 

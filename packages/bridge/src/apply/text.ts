@@ -2,16 +2,17 @@ import { InsertTextOperation, RemoveTextOperation } from 'slate'
 
 import { getTarget } from '../path'
 import { SyncValue } from '../model'
+import Automerge from 'automerge'
 
 export const insertText = (
   doc: SyncValue,
   op: InsertTextOperation
 ): SyncValue => {
-  const node = getTarget(doc, op.path)
+  const node = getTarget<SyncValue, { text: Automerge.Text }>(doc, op.path)
 
   const offset = Math.min(node.text.length, op.offset)
 
-  node.text.insertAt(offset, ...op.text.split(''))
+  node.text.insertAt?.(offset, ...op.text.split(''))
 
   return doc
 }
@@ -20,11 +21,11 @@ export const removeText = (
   doc: SyncValue,
   op: RemoveTextOperation
 ): SyncValue => {
-  const node = getTarget(doc, op.path)
+  const node = getTarget<SyncValue, { text: Automerge.Text }>(doc, op.path)
 
   const offset = Math.min(node.text.length, op.offset)
 
-  node.text.deleteAt(offset, op.text.length)
+  node.text.deleteAt?.(offset, op.text.length)
 
   return doc
 }
