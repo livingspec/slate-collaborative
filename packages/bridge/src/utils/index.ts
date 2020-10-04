@@ -6,12 +6,7 @@ import { CollabAction } from '../model'
 export * from './testUtils'
 
 const toJS = (node: any) => {
-  try {
-    return JSON.parse(JSON.stringify(node))
-  } catch (e) {
-    console.error('Convert to js failed!!! Return null')
-    return null
-  }
+  return JSON.parse(JSON.stringify(node))
 }
 
 const cloneNode = (node: any) => toSync(toJS(node))

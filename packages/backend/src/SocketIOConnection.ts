@@ -163,19 +163,15 @@ export default class SocketIOCollaboration {
    */
 
   private saveDocument = async (docId: string) => {
-    try {
-      const { onDocumentSave } = this.options
+    const { onDocumentSave } = this.options
 
-      const doc = this.backend.getDocument(docId)
+    const doc = this.backend.getDocument(docId)
 
-      if (!doc) {
-        throw new Error(`Can't receive document by id: ${docId}`)
-      }
-
-      onDocumentSave && (await onDocumentSave(docId, toJS(doc.children)))
-    } catch (e) {
-      console.error(e, docId)
+    if (!doc) {
+      throw new Error(`Can't receive document by id: ${docId}`)
     }
+
+    onDocumentSave && (await onDocumentSave(docId, toJS(doc.children)))
   }
 
   /**

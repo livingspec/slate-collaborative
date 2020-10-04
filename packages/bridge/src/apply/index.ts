@@ -15,19 +15,13 @@ const opType = {
 }
 
 const applyOperation = (doc: SyncValue, op: Operation): SyncValue => {
-  try {
-    const applyOp = opType[op.type]
+  const applyOp = opType[op.type]
 
-    if (!applyOp) {
-      throw new TypeError(`Unsupported operation type: ${op.type}!`)
-    }
-
-    return applyOp(doc, op as any)
-  } catch (e) {
-    console.error(e, op, toJS(doc))
-
-    return doc
+  if (!applyOp) {
+    throw new TypeError(`Unsupported operation type: ${op.type}!`)
   }
+
+  return applyOp(doc, op as any)
 }
 
 const applySlateOps = (doc: SyncValue, operations: Operation[]): SyncValue => {

@@ -57,29 +57,25 @@ export const AutomergeEditor = {
     operations: Operation[],
     cursorData?: CursorData
   ) => {
-    try {
-      const doc = e.docSet.getDoc(docId)
+    const doc = e.docSet.getDoc(docId)
 
-      if (!doc) {
-        throw new TypeError(`Unknown docId: ${docId}!`)
-      }
-
-      let changed
-
-      for await (let op of operations) {
-        changed = Automerge.change<SyncDoc>(changed || doc, d =>
-          applyOperation(d.children, op)
-        )
-      }
-
-      changed = Automerge.change(changed || doc, d => {
-        setCursor(e.clientId, e.selection, d, operations, cursorData || {})
-      })
-
-      e.docSet.setDoc(docId, changed as any)
-    } catch (e) {
-      console.error(e)
+    if (!doc) {
+      throw new TypeError(`Unknown docId: ${docId}!`)
     }
+
+    let changed
+
+    for await (let op of operations) {
+      changed = Automerge.change<SyncDoc>(changed || doc, d =>
+        applyOperation(d.children, op)
+      )
+    }
+
+    changed = Automerge.change(changed || doc, d => {
+      setCursor(e.clientId, e.selection, d, operations, cursorData || {})
+    })
+
+    e.docSet.setDoc(docId, changed as any)
   },
 
   /**
@@ -115,34 +111,30 @@ export const AutomergeEditor = {
     data: Automerge.Message,
     preserveExternalHistory?: boolean
   ) => {
-    try {
-      const current: any = e.docSet.getDoc(docId)
+    const current: any = e.docSet.getDoc(docId)
 
-      const updated = e.connection.receiveMsg(data)
+    const updated = e.connection.receiveMsg(data)
 
-      const operations = Automerge.diff(current, updated)
+    const operations = Automerge.diff(current, updated)
 
-      if (operations.length) {
-        const slateOps = toSlateOp(operations, current)
+    if (operations.length) {
+      const slateOps = toSlateOp(operations, current)
 
-        e.isRemote = true
+      e.isRemote = true
 
-        Editor.withoutNormalizing(e, () => {
-          if (HistoryEditor.isHistoryEditor(e) && !preserveExternalHistory) {
-            HistoryEditor.withoutSaving(e, () => {
-              slateOps.forEach((o: Operation) => e.apply(o))
-            })
-          } else {
+      Editor.withoutNormalizing(e, () => {
+        if (HistoryEditor.isHistoryEditor(e) && !preserveExternalHistory) {
+          HistoryEditor.withoutSaving(e, () => {
             slateOps.forEach((o: Operation) => e.apply(o))
-          }
+          })
+        } else {
+          slateOps.forEach((o: Operation) => e.apply(o))
+        }
 
-          e.onCursor && e.onCursor(updated.cursors)
-        })
+        e.onCursor && e.onCursor(updated.cursors)
+      })
 
-        Promise.resolve().then(_ => (e.isRemote = false))
-      }
-    } catch (e) {
-      console.error(e)
+      Promise.resolve().then(_ => (e.isRemote = false))
     }
   },
 

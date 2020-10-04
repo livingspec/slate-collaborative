@@ -1,7 +1,7 @@
 import * as Automerge from 'automerge'
 import { Element } from 'slate'
 
-import { toSlatePath, toJS } from '../utils'
+import { toSlatePath } from '../utils'
 import { getTarget } from '../path'
 
 const removeTextOp = (op: Automerge.Diff) => (map: any, doc: Element) => {
@@ -9,13 +9,7 @@ const removeTextOp = (op: Automerge.Diff) => (map: any, doc: Element) => {
 
   const slatePath = toSlatePath(path).slice(0, path?.length)
 
-  let node
-
-  try {
-    node = getTarget(doc, slatePath) || map[obj]
-  } catch (e) {
-    console.error(e, op, doc)
-  }
+  let node = getTarget(doc, slatePath) || map[obj]
 
   if (typeof index !== 'number') return
 
@@ -55,33 +49,27 @@ const removeNodeOp = ({ index, obj, path }: Automerge.Diff) => (
 }
 
 const opRemove = (op: Automerge.Diff, [map, ops]: any) => {
-  try {
-    const { index, path, obj, type } = op
+  const { index, path, obj, type } = op
 
-    if (
-      map.hasOwnProperty(obj) &&
-      typeof map[obj] !== 'string' &&
-      type !== 'text'
-    ) {
-      map[obj].splice(index, 1)
-
-      return [map, ops]
-    }
-
-    if (!path) return [map, ops]
-
-    const key = path[path.length - 1]
-
-    if (key === 'cursors') return [map, ops]
-
-    const fn = key === 'text' ? removeTextOp : removeNodeOp
-
-    return [map, [...ops, fn(op)]]
-  } catch (e) {
-    console.error(e, op, toJS(map))
+  if (
+    map.hasOwnProperty(obj) &&
+    typeof map[obj] !== 'string' &&
+    type !== 'text'
+  ) {
+    map[obj].splice(index, 1)
 
     return [map, ops]
   }
+
+  if (!path) return [map, ops]
+
+  const key = path[path.length - 1]
+
+  if (key === 'cursors') return [map, ops]
+
+  const fn = key === 'text' ? removeTextOp : removeNodeOp
+
+  return [map, [...ops, fn(op)]]
 }
 
 export default opRemove

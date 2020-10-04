@@ -62,11 +62,7 @@ class AutomergeBackend {
    */
 
   receiveOperation = (id: string, data: CollabAction) => {
-    try {
-      this.connections[id].receiveMsg(data.payload)
-    } catch (e) {
-      console.error('Unexpected error in receiveOperation', e)
-    }
+    this.connections[id].receiveMsg(data.payload)
   }
 
   /**
@@ -80,19 +76,15 @@ class AutomergeBackend {
    */
 
   appendDocument = (docId: string, data: Node[]) => {
-    try {
-      if (this.getDocument(docId)) {
-        throw new Error(`Already has document with id: ${docId}`)
-      }
-
-      const sync = toSync({ cursors: {}, children: data })
-
-      const doc = Automerge.from<SyncDoc>(sync)
-
-      this.docSet.setDoc(docId, doc)
-    } catch (e) {
-      console.error(e, docId)
+    if (this.getDocument(docId)) {
+      throw new Error(`Already has document with id: ${docId}`)
     }
+
+    const sync = toSync({ cursors: {}, children: data })
+
+    const doc = Automerge.from<SyncDoc>(sync)
+
+    this.docSet.setDoc(docId, doc)
   }
 
   /**
@@ -106,19 +98,15 @@ class AutomergeBackend {
    */
 
   garbageCursor = (docId: string, id: string) => {
-    try {
-      const doc = this.getDocument(docId)
+    const doc = this.getDocument(docId)
 
-      if (!doc.cursors) return
+    if (!doc.cursors) return
 
-      const change = Automerge.change(doc, (d: any) => {
-        delete d.cursors[id]
-      })
+    const change = Automerge.change(doc, (d: any) => {
+      delete d.cursors[id]
+    })
 
-      this.docSet.setDoc(docId, change)
-    } catch (e) {
-      console.error('Unexpected error in garbageCursor', e)
-    }
+    this.docSet.setDoc(docId, change)
   }
 }
 

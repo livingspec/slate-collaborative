@@ -49,32 +49,26 @@ const insertByType = {
 }
 
 const opInsert = (op: Automerge.Diff, [map, ops]: any, doc: SyncDoc) => {
-  try {
-    const { link, obj, path, index, type, value } = op
+  const { link, obj, path, index, type, value } = op
 
-    if (link && map.hasOwnProperty(obj)) {
-      map[obj].splice(index, 0, map[value] || value)
-    } else if ((type === 'text' || type === 'list') && !path) {
-      map[obj] = map[obj]
-        ? map[obj]
-            .slice(0, index)
-            .concat(value)
-            .concat(map[obj].slice(index))
-        : value
-    } else {
-      const insert = insertByType[type]
+  if (link && map.hasOwnProperty(obj)) {
+    map[obj].splice(index, 0, map[value] || value)
+  } else if ((type === 'text' || type === 'list') && !path) {
+    map[obj] = map[obj]
+      ? map[obj]
+          .slice(0, index)
+          .concat(value)
+          .concat(map[obj].slice(index))
+      : value
+  } else {
+    const insert = insertByType[type]
 
-      const operation = insert && insert(op, doc)
+    const operation = insert && insert(op, doc)
 
-      ops.push(operation)
-    }
-
-    return [map, ops]
-  } catch (e) {
-    console.error(e, op, toJS(map))
-
-    return [map, ops]
+    ops.push(operation)
   }
+
+  return [map, ops]
 }
 
 export default opInsert
