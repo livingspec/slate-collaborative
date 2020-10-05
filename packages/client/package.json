@@ -27,8 +27,6 @@
   "dependencies": {
     "@livingspec/slate-collaborative-bridge": "^0.7.1-alpha.0",
     "automerge": "0.14.0",
-    "slate": "0.58.3",
-    "slate-history": "0.58.3",
     "socket.io-client": "^2.3.0",
     "typescript": "^3.8.3"
   },
@@ -41,7 +39,13 @@
     "@babel/preset-react": "^7.6.0",
     "@babel/preset-typescript": "^7.6.0",
     "@types/react": "^16.9.34",
-    "@types/socket.io-client": "^1.4.32"
+    "@types/socket.io-client": "^1.4.32",
+    "slate": "0.58.4",
+    "slate-history": "0.58.4"
+  },
+  "peerDependencies": {
+    "slate": "0.58.4",
+    "slate-history": "0.58.4"
   },
   "directories": {
     "lib": "lib"
