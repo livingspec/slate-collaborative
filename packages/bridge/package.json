@@ -27,8 +27,7 @@
   },
   "dependencies": {
     "automerge": "0.14.0",
-    "slate": "0.58.4",
-    "typescript": "^3.8.3"
+    "slate": "0.58.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
@@ -40,7 +39,8 @@
     "@babel/preset-typescript": "^7.6.0",
     "@types/jest": "^24.9.0",
     "jest": "^24.9.0",
-    "ts-jest": "^25.4.0"
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
   },
   "directories": {
     "lib": "lib"

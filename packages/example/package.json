@@ -26,8 +26,7 @@
     "react-scripts": "3.1.2",
     "slate": "0.58.4",
     "slate-history": "0.58.4",
-    "slate-react": "0.58.4",
-    "typescript": "^3.8.3"
+    "slate-react": "0.58.4"
   },
   "scripts": {
     "start": "node server.js",
@@ -54,5 +53,8 @@
   },
   "engines": {
     "node": "12.x"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
   }
 }

@@ -29,8 +29,7 @@
     "automerge": "0.14.0",
     "lodash": "^4.17.15",
     "slate": "0.58.4",
-    "socket.io": "^2.3.0",
-    "typescript": "^3.8.3"
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
@@ -43,7 +42,8 @@
     "@babel/preset-typescript": "^7.6.0",
     "@babel/runtime": "^7.6.0",
     "@types/lodash": "^4.14.161",
-    "@types/socket.io": "^2.1.11"
+    "@types/socket.io": "^2.1.11",
+    "typescript": "^3.8.3"
   },
   "directories": {
     "lib": "lib"
