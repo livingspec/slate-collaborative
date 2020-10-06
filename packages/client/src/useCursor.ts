@@ -25,7 +25,7 @@ const useCursor = (
 
       setSursorData(ranges)
     }
-  }, [])
+  }, [e])
 
   const cursors = useMemo<Cursor[]>(() => cursorData, [cursorData])
 
