@@ -97,6 +97,8 @@ export const AutomergeEditor = {
     Editor.withoutNormalizing(e, () => {
       e.children = toJS(mergedDoc).children
 
+      e.onCursor && e.onCursor(mergedDoc.cursors)
+
       e.onChange()
     })
   },
