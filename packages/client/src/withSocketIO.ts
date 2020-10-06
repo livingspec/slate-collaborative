@@ -73,6 +73,7 @@ const withSocketIO = <T extends AutomergeEditor>(
 
     e.socket.on('disconnect', () => {
       e.garbageCursor()
+      e.closeConnection()
 
       onDisconnect && onDisconnect()
     })
@@ -90,8 +91,6 @@ const withSocketIO = <T extends AutomergeEditor>(
     e.socket.removeListener('msg')
 
     e.socket.close()
-
-    e.closeConnection()
 
     return e
   }
@@ -123,8 +122,6 @@ const withSocketIO = <T extends AutomergeEditor>(
 
   e.destroy = () => {
     e.socket.close()
-
-    e.closeConnection()
   }
 
   autoConnect && e.connect()
