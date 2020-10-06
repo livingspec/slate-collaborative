@@ -64,7 +64,7 @@ const withAutomerge = <T extends Editor>(
    * Clear cursor data
    */
 
-  e.gabageCursor = () => {
+  e.garbageCursor = () => {
     AutomergeEditor.garbageCursor(e, docId)
   }
 

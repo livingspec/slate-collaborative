@@ -3,7 +3,7 @@ import { Node, Range } from 'slate'
 
 export type SyncValue = Automerge.List<Node>
 
-export type SyncDoc = Automerge.Doc<{ children: SyncValue; cursors: Cursors }>
+export type SyncDoc = Automerge.Doc<{ children: SyncValue; cursors?: Cursors }>
 
 export type CollabActionType = 'operation' | 'document'
 

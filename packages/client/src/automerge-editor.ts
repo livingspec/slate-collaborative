@@ -30,7 +30,7 @@ export interface AutomergeEditor extends Editor {
   receiveDocument: (data: string) => void
   receiveOperation: (data: Automerge.Message) => void
 
-  gabageCursor: () => void
+  garbageCursor: () => void
 
   onCursor: (data: any) => void
 }
@@ -143,8 +143,8 @@ export const AutomergeEditor = {
   garbageCursor: (e: AutomergeEditor, docId: string) => {
     const doc = e.docSet.getDoc(docId)
 
-    const changed = Automerge.change<SyncDoc>(doc, (d: any) => {
-      delete d.cusors
+    const changed = Automerge.change<SyncDoc>(doc, d => {
+      delete d.cursors
     })
 
     e.onCursor && e.onCursor(null)

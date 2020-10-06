@@ -72,7 +72,7 @@ const withSocketIO = <T extends AutomergeEditor>(
     })
 
     e.socket.on('disconnect', () => {
-      e.gabageCursor()
+      e.garbageCursor()
 
       onDisconnect && onDisconnect()
     })
