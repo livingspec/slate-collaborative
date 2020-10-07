@@ -65,7 +65,7 @@ const withAutomerge = <T extends Editor>(
    */
 
   e.garbageCursor = () => {
-    AutomergeEditor.garbageCursor(e, docId)
+    withDefaultDoc(() => AutomergeEditor.garbageCursor(e, docId))
   }
 
   /**
@@ -76,7 +76,9 @@ const withAutomerge = <T extends Editor>(
     const operations: any = e.operations
 
     if (!e.isRemote) {
-      AutomergeEditor.applySlateOps(e, docId, operations, cursorData)
+      withDefaultDoc(() => {
+        AutomergeEditor.applySlateOps(e, docId, operations, cursorData)
+      })
 
       onChange()
     }
@@ -103,6 +105,18 @@ const withAutomerge = <T extends Editor>(
   }
 
   return e
+
+  // FIXME: crutch implementation, AutomergeEditor should be provided the doc
+  //  to work on, which would void the need for initializing like this.
+  function withDefaultDoc(next: () => void) {
+    const documentNotInitialized = !Array.from(e.docSet.docIds).includes(docId)
+    if (documentNotInitialized) {
+      // the user should not know anything about waiting for the document sync
+      e.docSet.setDoc(docId, Automerge.from({ children: e.children }))
+    }
+
+    next()
+  }
 }
 
 export default withAutomerge
