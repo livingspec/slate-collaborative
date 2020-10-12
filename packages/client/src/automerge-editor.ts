@@ -144,7 +144,7 @@ export const AutomergeEditor = {
     const doc = e.docSet.getDoc(docId)
 
     const changed = Automerge.change<SyncDoc>(doc, d => {
-      delete d.cursors
+      delete d.cursors[e.clientId]
     })
 
     e.onCursor && e.onCursor(null)

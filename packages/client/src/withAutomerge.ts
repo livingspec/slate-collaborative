@@ -112,7 +112,10 @@ const withAutomerge = <T extends Editor>(
     const documentNotInitialized = !Array.from(e.docSet.docIds).includes(docId)
     if (documentNotInitialized) {
       // the user should not know anything about waiting for the document sync
-      e.docSet.setDoc(docId, Automerge.from({ children: e.children }))
+      e.docSet.setDoc(
+        docId,
+        Automerge.from({ cursors: {}, children: e.children })
+      )
     }
 
     next()
