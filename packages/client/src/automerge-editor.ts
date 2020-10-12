@@ -22,7 +22,7 @@ export interface AutomergeEditor extends Editor {
   docSet: Automerge.DocSet<SyncDoc>
   connection: Automerge.Connection<SyncDoc>
 
-  onConnectionMsg: (msg: Automerge.Message) => void
+  onCollabAction?: (action: CollabAction) => void
 
   openConnection: () => void
   closeConnection: () => void
@@ -45,13 +45,21 @@ export const AutomergeEditor = {
    */
 
   createConnection: (e: AutomergeEditor, emit: (data: CollabAction) => void) =>
-    new Automerge.Connection(e.docSet, toCollabAction('operation', emit)),
+    new Automerge.Connection(e.docSet, message =>
+      toCollabAction('operation', action => {
+        emit(action)
+        e.onCollabAction?.({
+          ...action,
+          slateOps: e.operations
+        } as any)
+      })(message)
+    ),
 
   /**
    * Apply Slate operations to Automerge
    */
 
-  applySlateOps: async (
+  applySlateOps: (
     e: AutomergeEditor,
     docId: string,
     operations: Operation[],
@@ -65,7 +73,7 @@ export const AutomergeEditor = {
 
     let changed
 
-    for await (let op of operations) {
+    for (let op of operations) {
       changed = Automerge.change<SyncDoc>(changed || doc, d =>
         applyOperation(d.children, op)
       )
