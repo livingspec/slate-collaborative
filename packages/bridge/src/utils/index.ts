@@ -1,7 +1,9 @@
+import { Message, uuid } from 'automerge'
+
 import toSync from './toSync'
 import hexGen from './hexGen'
 
-import { CollabAction } from '../model'
+import { CollabAction, CollabActionType } from '../model'
 
 export * from './testUtils'
 
@@ -14,8 +16,9 @@ const cloneNode = (node: any) => toSync(toJS(node))
 const toSlatePath = (path: any) =>
   path ? path.filter((d: any) => Number.isInteger(d)) : []
 
-const toCollabAction = (type: any, fn: (action: CollabAction) => void) => (
-  payload: any
-) => fn({ type, payload })
+const toCollabAction = (
+  type: CollabActionType,
+  fn: (action: CollabAction) => void
+) => (payload: Message) => fn({ type, payload, correlationId: uuid() })
 
 export { toSync, toJS, toSlatePath, hexGen, cloneNode, toCollabAction }

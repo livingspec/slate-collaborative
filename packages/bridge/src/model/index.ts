@@ -10,6 +10,8 @@ export type CollabActionType = 'operation' | 'document'
 export interface CollabAction {
   type: CollabActionType
   payload: any
+  correlationId?: string
+  [key: string]: any
 }
 
 export interface CursorData {
