@@ -7,9 +7,7 @@ import { CollabAction, CollabActionType } from '../model'
 
 export * from './testUtils'
 
-const toJS = (node: any) => {
-  return JSON.parse(JSON.stringify(node))
-}
+const toJS = <T>(node: T) => JSON.parse(JSON.stringify(node)) as T
 
 const cloneNode = (node: any) => toSync(toJS(node))
 
