@@ -23,5 +23,5 @@ export interface Cursor extends Range, CursorData {
 }
 
 export type Cursors = {
-  [key: string]: Cursor
+  [key: string]: string
 }
